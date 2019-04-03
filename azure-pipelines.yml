@@ -15,4 +15,4 @@ variables:
 steps:
 - script: dotnet restore
 - script: dotnet build --configuration $(buildConfiguration)
-- script: dotnet publish --configuration --output $(Build.ArtifactStagingDirectory)
+- script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
