@@ -17,7 +17,7 @@ export class Home extends Component {
       },
       {
         image: "http://www.clearwatercasino.com/wp-content/uploads/2014/03/Web-Landing-700x386.png",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, esse voluptatem ex iure aliquam quas sed aperiam ut molestias! Aperiam, voluptates ex eaque ullam facere blanditiis doloribus quis reiciendis provident."
+        message: "Sit amet consectetur adipisicing elit. Facilis, esse voluptatem ex iure aliquam quas sed aperiam ut molestias! Aperiam, voluptates ex eaque ullam facere blanditiis doloribus quis reiciendis provident."
       },
     ]
   }
@@ -29,6 +29,7 @@ export class Home extends Component {
       <article className="home">
         {posts.map(p => (
           <Post
+            key={p.message}
             image={p.image}
             message={p.message}
           />
