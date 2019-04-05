@@ -14,15 +14,14 @@ export class Home extends Component {
     posts: []
   }
 
-  constructor(props: any) {
-    super(props);
+  componentDidMount() {
     this.load();
   }
 
   private async load() {
     const posts = await postService.getPosts();
 
-    this.setState(() => { posts });
+    this.setState(() => ({ posts }));
   }
 
   render() {

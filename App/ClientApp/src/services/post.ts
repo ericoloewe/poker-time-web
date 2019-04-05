@@ -1,6 +1,6 @@
 class PostService {
   async getPosts(): Promise<Models.Post[]> {
-    return [
+    return Promise.resolve([
       {
         id: '1',
         image: "https://assets.entrepreneur.com/content/3x2/2000/20151023204134-poker-game-gambling-gamble-cards-money-chips-game.jpeg?width=700&crop=2:1",
@@ -16,7 +16,7 @@ class PostService {
         image: "http://www.clearwatercasino.com/wp-content/uploads/2014/03/Web-Landing-700x386.png",
         message: "Sit amet consectetur adipisicing elit. Facilis, esse voluptatem ex iure aliquam quas sed aperiam ut molestias! Aperiam, voluptates ex eaque ullam facere blanditiis doloribus quis reiciendis provident."
       },
-    ]
+    ])
   }
 }
 
