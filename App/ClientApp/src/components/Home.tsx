@@ -1,26 +1,39 @@
 import React, { Component } from 'react';
+import { Post } from './Post/Post';
+import './Home.scss';
 
 export class Home extends Component {
   static displayName = Home.name;
 
-  render () {
+  state = {
+    posts: [
+      {
+        image: "https://assets.entrepreneur.com/content/3x2/2000/20151023204134-poker-game-gambling-gamble-cards-money-chips-game.jpeg?width=700&crop=2:1",
+        message: "Some quick example text to build on the card title and make up the bulk of the card's content."
+      },
+      {
+        image: "https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2018/aguidetopoke.jpg",
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, esse voluptatem ex iure aliquam quas sed aperiam ut molestias! Aperiam, voluptates ex eaque ullam facere blanditiis doloribus quis reiciendis provident."
+      },
+      {
+        image: "http://www.clearwatercasino.com/wp-content/uploads/2014/03/Web-Landing-700x386.png",
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, esse voluptatem ex iure aliquam quas sed aperiam ut molestias! Aperiam, voluptates ex eaque ullam facere blanditiis doloribus quis reiciendis provident."
+      },
+    ]
+  }
+
+  render() {
+    const { posts } = this.state
+
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
+      <article className="home">
+        {posts.map(p => (
+          <Post
+            image={p.image}
+            message={p.message}
+          />
+        ))}
+      </article>
     );
   }
 }

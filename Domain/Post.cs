@@ -5,10 +5,10 @@ namespace Domain
 {
     public class Post
     {
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public Image Image { get; set; }
         public IList<Like> Like { get; set; }
+        public Image Image { get; set; }
+        public string Id { get; set; }
+        public string Message { get; set; }
+        public User Author { get; set; }
     }
 }
