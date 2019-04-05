@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { UserAvatar } from '../UserAvatar';
-import home from './home.svg';
-import dice from './dice.svg';
-import question from './question.svg';
-import cog from './cog.svg';
+import { ReactComponent as Home } from './home.svg';
+import { ReactComponent as Dice } from './dice.svg';
+import { ReactComponent as Question } from './question.svg';
+import { ReactComponent as Cog } from './cog.svg';
 import './Navigation.scss';
 
 export class Navigation extends Component {
@@ -11,17 +11,17 @@ export class Navigation extends Component {
     return (
       <section className="navigation">
         <a href="/" className="link home">
-          <img src={home} alt="Link home" />
+          <Home />
         </a>
         <a href="/" className="link game">
-          <img src={dice} alt="Link game" />
+          <Dice />
         </a>
         <UserAvatar />
         <a href="/" className="link about">
-          <img src={question} alt="Link about" />
+          <Question />
         </a>
         <a href="/" className="link settings">
-          <img src={cog} alt="Link setting" />
+          <Cog />
         </a>
       </section >
     );

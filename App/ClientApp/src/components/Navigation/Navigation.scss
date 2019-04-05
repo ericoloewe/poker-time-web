@@ -14,8 +14,23 @@
         align-items: center;
         justify-content: center;
         flex: .2;
+        color: #aaa;
 
-        >img {
+        &:hover {
+            color: darken(#aaa, 10);
+
+            &:active,
+            &:focus {
+                color: darken(#aaa, 20);
+            }
+        }
+
+        &:active,
+        &:focus {
+            color: darken(#aaa, 10);
+        }
+
+        >svg {
             width: 50%;
         }
     }
@@ -28,7 +43,8 @@
     .user-avatar {
 
         &,
-        >img {
+        >img,
+        >svg {
             max-height: 100%;
             max-width: 100%;
         }
