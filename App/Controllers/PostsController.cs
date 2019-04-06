@@ -11,7 +11,7 @@ namespace App.Controllers
     [Route("/api/[controller]")]
     public class PostsController : Controller
     {
-        private static PostData[] Posts = new[]
+        private static IList<PostData> Posts = new[]
         {
             new PostData() {
                 Id = "1",
@@ -34,6 +34,12 @@ namespace App.Controllers
         public IEnumerable<PostData> GetAll()
         {
             return Posts;
+        }
+
+        [HttpPost]
+        public void Save(PostData post)
+        {
+            Posts.Add(post);
         }
     }
 }

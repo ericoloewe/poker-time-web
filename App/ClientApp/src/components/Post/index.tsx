@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardText } from 'reactstrap';
 import { ReactComponent as RegularHearth } from './regular-hearth.svg';
 import { ReactComponent as SolidHearth } from './solid-hearth.svg';
-import './Post.scss';
+import './index.scss';
 
 interface PostProps {
   message: string;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { UserAvatar } from '../UserAvatar';
+import { UserAvatar } from '../user-avatar';
 import { ReactComponent as Home } from './home.svg';
 import { ReactComponent as Dice } from './dice.svg';
 import { ReactComponent as Question } from './question.svg';
 import { ReactComponent as Cog } from './cog.svg';
-import './Navigation.scss';
+import './index.scss';
 
 export class Navigation extends Component {
   render() {

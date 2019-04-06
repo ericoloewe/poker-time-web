@@ -1,5 +1,9 @@
+@import '../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../node_modules/bootstrap/scss/card';
+@import '../node_modules/bootstrap/scss/bootstrap-grid';
+
 .shared-layout {
-  .container {
-    padding-bottom: 10vh;
-  }
+    .container {
+        padding-bottom: 10vh;
+    }
 }

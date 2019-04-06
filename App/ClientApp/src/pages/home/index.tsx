@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Post } from './Post/Post';
-import './Home.scss';
-import { postService } from '../services/post';
+import React from 'react';
+import { Post } from '../../components/post';
+import './index.scss';
+import { postService } from '../../services/post';
 
 interface HomeState {
   posts: Array<Models.Post>
 }
 
-export class Home extends Component {
+export default class Home extends React.Component {
   static displayName = Home.name;
 
   state: HomeState = {
@@ -19,7 +19,7 @@ export class Home extends Component {
   }
 
   private async load() {
-    const posts = await postService.getPosts();
+    const posts = await postService.search();
 
     this.setState(() => ({ posts }));
   }
