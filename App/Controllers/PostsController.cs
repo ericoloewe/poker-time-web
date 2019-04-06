@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Datas;
 using Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
@@ -11,7 +12,7 @@ namespace App.Controllers
     [Route("/api/[controller]")]
     public class PostsController : Controller
     {
-        private static IList<PostData> Posts = new[]
+        private static IList<PostData> Posts = new List<PostData>()
         {
             new PostData() {
                 Id = "1",
@@ -37,9 +38,14 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public void Save(PostData post)
+        public void Save(NewPostData newPost)
         {
-            Posts.Add(post);
+            Posts.Add(new PostData()
+            {
+                Id = $"{new Random().Next()}",
+                Image = newPost.Image.FileName,
+                Message = newPost.Message,
+            });
         }
     }
 }
