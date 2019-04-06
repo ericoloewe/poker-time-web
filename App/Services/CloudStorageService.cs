@@ -20,7 +20,7 @@ namespace App.Services
             this.azureStorageConfigs = azureStorageConfigs;
         }
 
-        public async Task<string> SaveFile(IFormFile file)
+        public async Task<string> SaveFile(IFormFile file, string containerName)
         {
             var fileUrl = file.FileName;
 
@@ -28,7 +28,7 @@ namespace App.Services
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    fileUrl = await StorageHelper.UploadFileToStorage(stream, file.FileName, azureStorageConfigs);
+                    fileUrl = await StorageHelper.UploadFileToStorage(stream, file.FileName, containerName, azureStorageConfigs);
                 }
             }
             else

@@ -11,6 +11,7 @@ namespace App.Services
 {
     public class PostService
     {
+        private const string CONTAINER_NAME = "posts";
         private IPostRepository postRepository = new PostRepository();
         private CloudStorageService cloudStorageService;
         private AzureStorageConfig azureStorageConfigs;
@@ -32,11 +33,10 @@ namespace App.Services
 
         public async Task Save(NewPostData newPost)
         {
-            var url = await cloudStorageService.SaveFile(newPost.Image);
+            var url = await cloudStorageService.SaveFile(newPost.Image, CONTAINER_NAME);
 
             postRepository.Save(new Post
             {
-                Id = $"{new Random().Next()}",
                 Image = new Image(url),
                 Message = newPost.Message,
             });

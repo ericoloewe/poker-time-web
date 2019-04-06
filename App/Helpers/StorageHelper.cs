@@ -25,7 +25,7 @@ namespace App.Helpers
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static async Task<string> UploadFileToStorage(Stream fileStream, string fileName, AzureStorageConfig _storageConfig)
+        public static async Task<string> UploadFileToStorage(Stream fileStream, string fileName, string containerName, AzureStorageConfig _storageConfig)
         {
             // Create storagecredentials object by reading the values from the configuration (appsettings.json)
             StorageCredentials storageCredentials = new StorageCredentials(_storageConfig.AccountName, _storageConfig.AccountKey);
@@ -37,7 +37,7 @@ namespace App.Helpers
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Get reference to the blob container by passing the name by reading the value from the configuration (appsettings.json)
-            CloudBlobContainer container = blobClient.GetContainerReference(_storageConfig.ImageContainer);
+            CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
             await container.CreateIfNotExistsAsync();
 
