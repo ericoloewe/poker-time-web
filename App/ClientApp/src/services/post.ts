@@ -1,6 +1,6 @@
 class PostService {
   async search(): Promise<Models.Post[]> {
-    return fetch('/api/posts')
+    return fetch('/api/post')
       .then(response => response.json())
   }
 
@@ -11,7 +11,7 @@ class PostService {
       formData.append(name, post[name]);
     }
 
-    return fetch('/api/posts', { method: "POST", body: formData })
+    return fetch('/api/post', { method: "POST", body: formData })
       .then(response => response.json())
   }
 }

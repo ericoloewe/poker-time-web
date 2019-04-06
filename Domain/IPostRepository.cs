@@ -5,6 +5,7 @@ namespace Domain
 {
     public interface IPostRepository
     {
-        IList<Post> GetPosts();
+        IList<Post> GetAll();
+        void Save(Post post);
     }
 }
