@@ -27,7 +27,7 @@ export class Post extends Component<PostProps, PostState> {
     }), () => {
       setTimeout(() => {
         this.setState(() => ({ showLike: false }))
-      }, 1000)
+      }, 500)
     })
   }
 
@@ -47,20 +47,23 @@ export class Post extends Component<PostProps, PostState> {
 
   private renderLike() {
     const { liked, showLike } = this.state
-    let component = null
 
     if (showLike) {
+      let component = null
+
       if (liked) {
         component = <SolidHearth className="like solid" />
       } else {
         component = <RegularHearth className="like regular" />
       }
+
+      return (
+        <div className="like-box">
+          {component}
+        </div>
+      )
     }
 
-    return (
-      <div className="like-box">
-        {component}
-      </div>
-    )
+    return null;
   }
 }

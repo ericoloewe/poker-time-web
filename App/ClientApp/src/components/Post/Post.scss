@@ -3,20 +3,35 @@
     position: relative;
 
     .like-box {
-      align-items: center;
-      display: flex;
-      flex: 1;
-      height: 100%;
-      justify-content: center;
-      left: 0;
-      position: absolute;
-      top: 0;
+        align-items: center;
+        background: rgba(white, .3);
+        display: flex;
+        flex: 1;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: cubic-bezier(0.46, 0.03, 0.52, 0.96) 200ms;
 
         .like {
-            display: flex;
+            animation: heart-increase linear 300ms;
             color: red;
+            display: flex;
             height: 20%;
             width: 20%;
         }
+    }
+}
+
+@keyframes heart-increase {
+    from {
+        height: 5%;
+        width: 5%;
+    }
+
+    to {
+        height: 20%;
+        width: 20%;
     }
 }
