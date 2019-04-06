@@ -7,11 +7,12 @@ export class Router extends Component {
 
   render() {
     const Home = lazy(() => import('../home'))
+    const PostForm = lazy(() => import('../post-form'))
 
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route exact path='/criar-postagem' component={Home} />
+        <Route exact path='/criar-postagem' component={PostForm} />
       </Layout>
     );
   }
