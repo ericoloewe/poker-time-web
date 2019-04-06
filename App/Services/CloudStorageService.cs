@@ -22,13 +22,15 @@ namespace App.Services
 
         public async Task<string> SaveFile(IFormFile file, string containerName)
         {
-            var fileUrl = file.FileName;
+            string fileUrl = null;
 
             if (StorageHelper.IsImage(file))
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    fileUrl = await StorageHelper.UploadFileToStorage(stream, file.FileName, containerName, azureStorageConfigs);
+                    var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssfffffff")}_{file.FileName}";
+
+                    fileUrl = await StorageHelper.UploadFileToStorage(stream, fileName, containerName, azureStorageConfigs);
                 }
             }
             else
