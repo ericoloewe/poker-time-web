@@ -8,6 +8,8 @@ export default class PostForm extends React.Component {
 
   private submit = (event: React.FormEvent<HTMLFormElement>) => {
     console.log(event);
+
+    event.preventDefault();
   }
 
   render() {
@@ -16,7 +18,7 @@ export default class PostForm extends React.Component {
         <Form onSubmit={this.submit}>
           <FormGroup>
             <Label for="message">Mensagem</Label>
-            <Input type="text" name="message" id="message" placeholder="Sua mensagem" />
+            <Input type="textarea" name="message" id="message" placeholder="Sua mensagem" />
           </FormGroup>
           <FormGroup row>
             <Label for="image" sm={2}>Imagem</Label>
