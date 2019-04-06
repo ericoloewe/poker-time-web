@@ -24,13 +24,22 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PostData> GetAll()
+        public ObjectResult GetAll()
         {
-            return postService.GetAll();
+            try
+            {
+                var posts = postService.GetAll();
+
+                return Ok(posts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost]
-        public async Task<JsonResult> Save(NewPostData newPost)
+        public async Task<ObjectResult> Save(NewPostData newPost)
         {
             try
             {
@@ -38,10 +47,10 @@ namespace App.Controllers
             }
             catch (Exception ex)
             {
-                return Json(BadRequest(ex));
+                return BadRequest(ex);
             }
 
-            return Json(Ok());
+            return Ok("OK");
         }
     }
 }

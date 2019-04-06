@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Datas;
 using App.Helpers;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 
 namespace App.Services
@@ -23,19 +24,19 @@ namespace App.Services
 
         public IEnumerable<PostData> GetAll()
         {
-            return postRepository.GetAll().Select(p => new PostData
+            return postRepository.GetAllWithImages().Select(p => new PostData
             {
                 Id = p.Id,
                 Image = p.Image.Url,
                 Message = p.Message,
-            });
+            }).ToList();
         }
 
         public async Task Save(NewPostData newPost)
         {
             var url = await cloudStorageService.SaveFile(newPost.Image, CONTAINER_NAME);
 
-            postRepository.Save(new Post
+            await postRepository.SaveAsync(new Post
             {
                 Image = new Image(url),
                 Message = newPost.Message,
