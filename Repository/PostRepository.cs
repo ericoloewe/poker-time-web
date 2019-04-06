@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Domain;
 
 namespace Repository
@@ -27,12 +30,34 @@ namespace Repository
 
         public IList<Post> GetAll()
         {
+            LoadIfNeed();
             return Posts;
+        }
+
+        private void LoadIfNeed()
+        {
+            throw new NotImplementedException();
         }
 
         public void Save(Post post)
         {
             Posts.Add(post);
+
+            new Thread(() =>
+            {
+                var appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "poker-time");
+                var postsFilePath = Path.Combine(appFolder, "posts.csv");
+
+                lock (Posts)
+                {
+                    File.WriteAllText(postsFilePath, Posts.Select(p => ToCsv(p)).Aggregate("", (p, n) => p + $"\n{n}"));
+                }
+            }).Start();
+        }
+
+        private string ToCsv(Post post)
+        {
+            throw new NotImplementedException();
         }
     }
 }
