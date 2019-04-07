@@ -13,14 +13,14 @@ export class Navigation extends Component {
         <a href="/" className="link home">
           <Home />
         </a>
-        <a href="/" className="link game">
+        <a href="/jogo" className="link game">
           <Dice />
         </a>
         <UserAvatar />
-        <a href="/" className="link about">
+        <a href="/sobre" className="link about">
           <Question />
         </a>
-        <a href="/" className="link settings">
+        <a href="/configuracoes" className="link settings">
           <Cog />
         </a>
       </section >
