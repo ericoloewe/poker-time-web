@@ -91,6 +91,8 @@ namespace Repository.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Password");
+
                     b.Property<DateTime>("UpdatedDate");
 
                     b.HasKey("Id");

@@ -9,7 +9,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(PokerTimeContext))]
-    [Migration("20190407005551_InitialCreate")]
+    [Migration("20190407010648_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,8 @@ namespace Repository.Migrations
                     b.Property<string>("ImageId");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Password");
 
                     b.Property<DateTime>("UpdatedDate");
 

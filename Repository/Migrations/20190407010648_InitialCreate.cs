@@ -28,9 +28,10 @@ namespace Repository.Migrations
                     Id = table.Column<string>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    ImageId = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    ImageId = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
