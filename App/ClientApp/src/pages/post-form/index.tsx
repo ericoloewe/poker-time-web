@@ -28,7 +28,7 @@ export default class PostForm extends React.Component {
     this.setState(() => ({ image }))
   }
 
-  private submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  private handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event && event.preventDefault();
 
     const { image, message } = this.state
@@ -43,7 +43,7 @@ export default class PostForm extends React.Component {
   render() {
     return (
       <article className="post-form">
-        <Form onSubmit={this.submit}>
+        <Form onSubmit={this.handleSubmit}>
           {this.renderMessage()}
           {this.renderImage()}
           <Button color="primary">Enviar</Button>

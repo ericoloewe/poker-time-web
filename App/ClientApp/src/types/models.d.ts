@@ -1,8 +1,19 @@
 namespace Models {
   type Dict = { [key: string]: string };
   
+  interface NewUser extends Dict {
+    email: string;
+    password: string;
+    image: File;
+    name: string;
+  }
+
+  interface UserLogin extends Dict {
+    email: string;
+    password: string;
+  }
+
   interface LoggedUser extends Dict {
-    id: string;
     email: string;
     image: string;
     name: string;
