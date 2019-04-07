@@ -1,6 +1,6 @@
 namespace Domain
 {
-    public class Image
+    public class Image : AuditableEntity
     {
         public string Id { get; set; }
         public string Url { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public class Post
+    public class Post : AuditableEntity
     {
         public IList<Like> Like { get; set; }
         public Image Image { get; set; }

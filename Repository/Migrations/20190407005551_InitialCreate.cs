@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
@@ -11,6 +12,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -23,12 +26,21 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    ImageId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,6 +48,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     ImageId = table.Column<string>(nullable: true),
                     Message = table.Column<string>(nullable: true),
                     AuthorId = table.Column<string>(nullable: true)
@@ -62,6 +76,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
                     PostId = table.Column<string>(nullable: true)
                 },
@@ -100,6 +116,11 @@ namespace Repository.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_ImageId",
                 table: "Posts",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_ImageId",
+                table: "Users",
                 column: "ImageId");
         }
 

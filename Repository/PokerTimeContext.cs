@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,28 @@ namespace Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=PokerTime.db");
+        }
+
+        public override int SaveChanges()
+        {
+            var modifiedEntries = ChangeTracker.Entries()
+                    .Where(x => (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (var entry in modifiedEntries)
+            {
+                var entity = entry.Entity as AuditableEntity;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entity.CreatedDate = DateTime.UtcNow;
+                }
+                else
+                {
+                    entity.UpdatedDate = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();
         }
     }
 }
