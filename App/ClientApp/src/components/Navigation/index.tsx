@@ -5,6 +5,7 @@ import { ReactComponent as Dice } from './dice.svg';
 import { ReactComponent as Question } from './question.svg';
 import { ReactComponent as Cog } from './cog.svg';
 import './index.scss';
+import { LoggedUserContext } from '../../contexts/logged-user';
 
 export class Navigation extends Component {
   render() {
@@ -16,7 +17,7 @@ export class Navigation extends Component {
         <a href="/jogo" className="link game">
           <Dice />
         </a>
-        <UserAvatar />
+        {this.renderAvatar()}
         <a href="/sobre" className="link about">
           <Question />
         </a>
@@ -24,6 +25,18 @@ export class Navigation extends Component {
           <Cog />
         </a>
       </section >
+    );
+  }
+
+  private renderAvatar() {
+    return (
+      <LoggedUserContext.Consumer>
+        {loggedUser => (
+          loggedUser == null ?
+            null :
+            <UserAvatar />
+        )}
+      </LoggedUserContext.Consumer>
     );
   }
 }
