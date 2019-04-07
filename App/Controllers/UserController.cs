@@ -23,7 +23,7 @@ namespace App.Controllers
             userService = new UserService(config.Value);
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<ObjectResult> Login(UserLoginData userLogin)
         {
             try
