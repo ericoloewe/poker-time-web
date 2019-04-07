@@ -28,7 +28,7 @@ export default class PostForm extends React.Component {
     this.setState(() => ({ image }))
   }
 
-  private submit = (event: React.FormEvent<HTMLFormElement>) => {
+  private submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event && event.preventDefault();
 
     const { image, message } = this.state
@@ -37,10 +37,7 @@ export default class PostForm extends React.Component {
       throw new Error('Fill the fields!')
     }
 
-    postService.save({
-      image,
-      message
-    })
+    await postService.save({ image, message })
   }
 
   render() {
@@ -49,7 +46,7 @@ export default class PostForm extends React.Component {
         <Form onSubmit={this.submit}>
           {this.renderMessage()}
           {this.renderImage()}
-          <Button>Enviar</Button>
+          <Button color="primary">Enviar</Button>
         </Form>
       </article>
     );

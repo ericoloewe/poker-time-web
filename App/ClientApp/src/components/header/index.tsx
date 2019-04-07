@@ -8,7 +8,9 @@ export class Header extends React.Component {
   render() {
     return (
       <section className="header">
-        <img src={logo} alt="PokerTime logo" />
+        <Link to="/">
+          <img src={logo} alt="PokerTime logo" />
+        </Link>
         <Link to="/criar-postagem" className="link">
           <Plus />
         </Link>

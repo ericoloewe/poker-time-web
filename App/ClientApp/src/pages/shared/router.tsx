@@ -11,14 +11,16 @@ export class Router extends Component {
     const Game = lazy(() => import('../game'))
     const About = lazy(() => import('../about'))
     const Configuration = lazy(() => import('../configuration'))
+    const User = lazy(() => import('../user'))
 
     return (
       <Layout>
         <Route exact path='/' component={Home} />
+        <Route exact path='/configuracoes' component={Configuration} />
         <Route exact path='/criar-postagem' component={PostForm} />
         <Route exact path='/jogo' component={Game} />
         <Route exact path='/sobre' component={About} />
-        <Route exact path='/configuracoes' component={Configuration} />
+        <Route exact path='/usuario' component={User} />
       </Layout>
     );
   }
