@@ -10,19 +10,41 @@ using Repository;
 
 namespace App.Services
 {
-    public class UserService
+    public interface IUserService
+    {
+        Task SaveAsync(NewUserData newUser);
+        Task<UserData> LoginAsync(UserLoginData userLogin);
+        Task<User> AuthenticateAsync(string email, string password);
+    }
+
+    public class UserService : IUserService
     {
         private const string CONTAINER_NAME = "users";
         private IUserRepository userRepository = new UserRepository();
         private CloudStorageService cloudStorageService;
         private AzureStorageConfig azureStorageConfigs;
 
+        public UserService() { }
+
         public UserService(AzureStorageConfig azureStorageConfigs)
         {
             cloudStorageService = new CloudStorageService(azureStorageConfigs);
         }
 
-        public async Task Save(NewUserData newUser)
+        public async Task<User> AuthenticateAsync(string email, string password)
+        {
+            var userPassword = CriptoHelper.encrypt(password);
+            var user = await userRepository.FindByEmailAndPassword(email, userPassword);
+
+            if (user == null)
+            {
+                throw new ArgumentException("There is no user with email and password");
+            }
+
+            return user;
+        }
+
+        public async Task SaveAsync(NewUserData newUser)
         {
             var url = await cloudStorageService.SaveFile(newUser.Image, CONTAINER_NAME);
 
@@ -35,14 +57,9 @@ namespace App.Services
             });
         }
 
-        public async Task<UserData> Login(UserLoginData userLogin)
+        public async Task<UserData> LoginAsync(UserLoginData userLogin)
         {
-            var user = await userRepository.FindByEmailAndPassword(userLogin.Email, CriptoHelper.encrypt(userLogin.Password));
-
-            if (user == null)
-            {
-                throw new ArgumentException("There is no user with email and password");
-            }
+            var user = await AuthenticateAsync(userLogin.Email, userLogin.Password);
 
             return new UserData
             {

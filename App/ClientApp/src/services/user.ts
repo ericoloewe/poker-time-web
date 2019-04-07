@@ -13,7 +13,10 @@ class UserService {
   async login(user: Models.UserLogin): Promise<Models.LoggedUser> {
     return fetch('/api/user/login', {
       method: "POST",
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then(response => response.json())
   }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using App.Services;
 using Microsoft.Extensions.Options;
 using App.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Controllers
 {
@@ -23,14 +24,32 @@ namespace App.Controllers
             userService = new UserService(config.Value);
         }
 
-        [HttpPost("login")]
-        public async Task<ObjectResult> Login(UserLoginData userLogin)
+        [Authorize]
+        [HttpGet()]
+        public async Task<ActionResult> GetLoggedUser()
         {
             try
             {
-                var userData = await userService.Login(userLogin);
+                return Ok("Ok");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody]UserLoginData userLogin)
+        {
+            try
+            {
+                var userData = await userService.LoginAsync(userLogin);
 
                 return Ok(userData);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = "true" });
             }
             catch (Exception ex)
             {
@@ -40,12 +59,12 @@ namespace App.Controllers
 
 
         [HttpPost("create-and-login")]
-        public async Task<ObjectResult> SaveAndLogin(NewUserData newUser)
+        public async Task<ActionResult> SaveAndLogin(NewUserData newUser)
         {
             try
             {
-                await userService.Save(newUser);
-                var userData = await userService.Login(newUser.ToLoginData());
+                await userService.SaveAsync(newUser);
+                var userData = await userService.LoginAsync(newUser.ToLoginData());
 
                 return Ok(userData);
             }

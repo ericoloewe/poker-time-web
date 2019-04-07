@@ -29,14 +29,16 @@ export default class Home extends React.Component {
 
     return (
       <article className="home">
-        {posts.map(p => (
-          <Post
-            key={p.message}
-            image={p.image}
-            message={p.message}
-          />
-        ))}
+        {
+          posts.length > 0 ?
+            this.renderPosts(posts) :
+            <p className="post-message">Nenhum post no momento</p>
+        }
       </article>
     );
+  }
+
+  private renderPosts(posts: Models.Post[]): React.ReactNode {
+    return posts.map(p => (<Post key={p.message} image={p.image} message={p.message} />));
   }
 }
