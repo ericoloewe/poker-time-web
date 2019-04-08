@@ -42,5 +42,10 @@ namespace App.Services
                 Message = newPost.Message,
             });
         }
+
+        internal Task Like(string postId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

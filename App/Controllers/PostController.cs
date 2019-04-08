@@ -39,6 +39,21 @@ namespace App.Controllers
         }
 
         [HttpPost]
+        public async Task<ObjectResult> Like(string postId)
+        {
+            try
+            {
+                await postService.Like(postId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok("OK");
+        }
+
+        [HttpPost]
         public async Task<ObjectResult> Save(NewPostData newPost)
         {
             try
