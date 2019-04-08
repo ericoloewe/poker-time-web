@@ -25,16 +25,19 @@ namespace App.Controllers
         }
 
         [Authorize]
-        [HttpGet()]
-        public async Task<ActionResult> GetLoggedUser()
+        [HttpGet]
+        public ActionResult GetLoggedUser()
         {
             try
             {
-                return Ok("Ok");
+                var authToken = Request.Cookies[UserService.AUTH_COOKIE_NAME];
+                var user = userService.GetUserDataByAuthToken(authToken);
+
+                return Ok(user);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return Json(BadRequest(ex));
             }
         }
 
@@ -43,17 +46,22 @@ namespace App.Controllers
         {
             try
             {
-                var userData = await userService.LoginAsync(userLogin);
+                var authToken = await userService.LoginAsync(userLogin);
+                var cookieOption = new CookieOptions();
 
-                return Ok(userData);
+                cookieOption.Expires = DateTime.Now.AddDays(1);
+
+                Response.Cookies.Append(UserService.AUTH_COOKIE_NAME, authToken);
+
+                return Ok(authToken);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { error = "true" });
+                return Json(BadRequest(new { error = "true" }));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return Json(BadRequest(ex));
             }
         }
 

@@ -29,20 +29,23 @@ namespace App.Helpers
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            if (!Request.Headers.ContainsKey("Authorization"))
+            // if (!Request.Headers.ContainsKey(UserService.AUTH_COOKIE_NAME))
+            //     return AuthenticateResult.Fail("Missing Authorization Header");
+            if (!Request.Cookies.ContainsKey(UserService.AUTH_COOKIE_NAME))
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
             User user = null;
 
             try
             {
-                var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-                var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-                var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
-                var username = credentials[0];
-                var password = credentials[1];
+                // TODO: try to use Request.Cookies.Keys
+                // var authHeader = AuthenticationHeaderValue.Parse(Request.Headers[UserService.AUTH_COOKIE_NAME]);
+                // var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
 
-                user = await userService.AuthenticateAsync(username, password);
+                // user = userService.GetUserByAuthToken(Encoding.UTF8.GetString(credentialBytes));
+                var authCookie = Request.Cookies[UserService.AUTH_COOKIE_NAME];
+
+                user = userService.GetUserByAuthToken(authCookie);
             }
             catch
             {

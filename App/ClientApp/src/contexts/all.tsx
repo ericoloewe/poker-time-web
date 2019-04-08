@@ -1,5 +1,6 @@
 import React from 'react';
 import { LoggedUserContext } from './logged-user';
+import { userService } from '../services/user';
 
 interface AllContextsState {
   loggedUser: any,
@@ -18,8 +19,10 @@ export class AllContexts extends React.Component<AllContextsProps, AllContextsSt
     this.load()
   }
 
-  private load() {
-    // TODO:
+  private async load() {
+    const loggedUser = await userService.getLoggedUser()
+
+    this.setState(() => ({ loggedUser }))
   }
 
   render() {

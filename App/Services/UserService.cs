@@ -13,12 +13,16 @@ namespace App.Services
     public interface IUserService
     {
         Task SaveAsync(NewUserData newUser);
-        Task<UserData> LoginAsync(UserLoginData userLogin);
+        Task<string> LoginAsync(UserLoginData userLogin);
         Task<User> AuthenticateAsync(string email, string password);
+        User GetUserByAuthToken(string authToker);
     }
 
     public class UserService : IUserService
     {
+        // TODO: improve that
+        public static IDictionary<string, User> AuthTokens { get; private set; } = new Dictionary<string, User>();
+        public static string AUTH_COOKIE_NAME = "Authorization";
         private const string CONTAINER_NAME = "users";
         private IUserRepository userRepository = new UserRepository();
         private CloudStorageService cloudStorageService;
@@ -57,9 +61,19 @@ namespace App.Services
             });
         }
 
-        public async Task<UserData> LoginAsync(UserLoginData userLogin)
+        public async Task<string> LoginAsync(UserLoginData userLogin)
         {
             var user = await AuthenticateAsync(userLogin.Email, userLogin.Password);
+            var userAuthToken = CriptoHelper.encrypt($"{user.Email}:{user.Password}");
+
+            AuthTokens[userAuthToken] = user;
+
+            return userAuthToken;
+        }
+
+        public UserData GetUserDataByAuthToken(string authToken)
+        {
+            var user = GetUserByAuthToken(authToken);
 
             return new UserData
             {
@@ -67,6 +81,11 @@ namespace App.Services
                 Image = user.Image.Url,
                 Name = user.Name,
             };
+        }
+
+        public User GetUserByAuthToken(string authToken)
+        {
+            return AuthTokens[authToken];
         }
     }
 }

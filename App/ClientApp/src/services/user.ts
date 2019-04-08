@@ -10,6 +10,17 @@ class UserService {
       .then(response => response.json())
   }
 
+  async getLoggedUser() {
+    let loggedUser = null
+    const response = await fetch('/api/user')
+
+    if (response.status !== 401) {
+      loggedUser = await response.json()
+    }
+
+    return loggedUser
+  }
+
   async login(user: Models.UserLogin): Promise<Models.LoggedUser> {
     return fetch('/api/user/login', {
       method: "POST",

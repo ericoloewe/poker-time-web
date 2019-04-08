@@ -12,7 +12,12 @@ export default class Configuration extends React.Component {
         <LoggedUserContext.Consumer>
           {loggedUser => (
             loggedUser == null ?
-              <Link to="/usuario" /> :
+              (
+                <React.Fragment>
+                  <Link className="btn btn-primary btn-block" to="/login">Entrar</Link>
+                  <Link className="btn btn-secondary btn-block" to="/usuario">Cadastrar-se</Link>
+                </React.Fragment>
+              ) :
               <h1>Configurações (Em contrução)</h1>
           )}
         </LoggedUserContext.Consumer>
