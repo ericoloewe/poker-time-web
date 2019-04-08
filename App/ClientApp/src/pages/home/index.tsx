@@ -58,7 +58,7 @@ export default class Home extends React.Component {
 
     return posts
       .filter(p => searchText.length === 0 || p.message.includes(searchText))
-      .map(p => (<Post key={p.id} image={p.image} message={p.message} />));
+      .map(p => (<Post key={p.id} image={p.image} message={p.message} likes={p.likes} liked={p.liked} />));
   }
 
   private renderSearch() {

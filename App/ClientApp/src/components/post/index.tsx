@@ -7,10 +7,12 @@ import './index.scss';
 interface PostProps {
   message: string;
   image: string;
+  likes?: number;
+  liked?: boolean;
 }
 
 interface PostState {
-  liked: boolean;
+  liked?: boolean;
   showLike: boolean;
 }
 
@@ -18,6 +20,12 @@ export class Post extends Component<PostProps, PostState> {
   state = {
     liked: false,
     showLike: false,
+  }
+
+  componentDidMount() {
+    const { liked } = this.props
+
+    this.setState(() => ({ liked }))
   }
 
   private _like = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -39,6 +47,7 @@ export class Post extends Component<PostProps, PostState> {
         {this.renderLike()}
         <CardImg top width="100%" src={image} alt="Card image cap" />
         <CardBody>
+          {this.renderLikes()}
           <CardText>{message}</CardText>
         </CardBody>
       </Card>
@@ -65,5 +74,15 @@ export class Post extends Component<PostProps, PostState> {
     }
 
     return null;
+  }
+
+  private renderLikes() {
+    const { liked } = this.state
+    const { likes } = this.props
+    const preparedLikes = likes || 0
+
+    return (
+      <CardText>Likes: {(liked ? 1 + preparedLikes : preparedLikes)}</CardText>
+    )
   }
 }

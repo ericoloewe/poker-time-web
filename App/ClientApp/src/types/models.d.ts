@@ -23,6 +23,7 @@ namespace Models {
     id: string;
     message: string;
     image: string;
+    likes?: number;
     liked?: boolean;
   }
 
