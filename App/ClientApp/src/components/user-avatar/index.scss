@@ -2,9 +2,13 @@
     display: flex;
     background: #ccc;
     border: 3px dashed black;
-    border-radius: 50%;
 
     .avatar-image {
         max-width: 100%;
+    }
+
+    &,
+    .avatar-image {
+        border-radius: 50%;
     }
 }

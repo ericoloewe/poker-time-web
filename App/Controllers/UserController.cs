@@ -53,7 +53,7 @@ namespace App.Controllers
 
                 Response.Cookies.Append(UserService.AUTH_COOKIE_NAME, authToken);
 
-                return Ok(authToken);
+                return Ok(new { authToken = authToken });
             }
             catch (ArgumentException ex)
             {

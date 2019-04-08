@@ -27,6 +27,7 @@ export default class Login extends React.Component {
     }
 
     await userService.login({ email, password })
+    location.href = '';
   }
 
   render() {
