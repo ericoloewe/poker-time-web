@@ -17,6 +17,7 @@ namespace Repository
             {
                 return db.Posts
                 .Include(p => p.Image)
+                .Reverse()
                 .ToList();
             }
         }
