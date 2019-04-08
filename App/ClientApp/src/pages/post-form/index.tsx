@@ -38,6 +38,7 @@ export default class PostForm extends React.Component {
     }
 
     await postService.save({ image, message })
+    location.href = ''
   }
 
   render() {

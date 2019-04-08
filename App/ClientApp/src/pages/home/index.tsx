@@ -2,16 +2,20 @@ import React from 'react';
 import { Post } from '../../components/post';
 import './index.scss';
 import { postService } from '../../services/post';
+import { Input } from 'reactstrap';
 
 interface HomeState {
   posts: Array<Models.Post>
+  searchText: string
 }
 
 export default class Home extends React.Component {
   static displayName = Home.name;
 
+  searchTimeout: NodeJS.Timeout | number | unknown = null;
   state: HomeState = {
-    posts: []
+    posts: [],
+    searchText: '',
   }
 
   componentDidMount() {
@@ -24,11 +28,22 @@ export default class Home extends React.Component {
     this.setState(() => ({ posts }));
   }
 
+  private handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+
+    clearTimeout(this.searchTimeout as number)
+
+    this.searchTimeout = setTimeout(() => {
+      this.setState(() => ({ searchText: value }))
+    }, 500)
+  }
+
   render() {
     const { posts } = this.state
 
     return (
       <article className="home">
+        {this.renderSearch()}
         {
           posts.length > 0 ?
             this.renderPosts(posts) :
@@ -39,6 +54,16 @@ export default class Home extends React.Component {
   }
 
   private renderPosts(posts: Models.Post[]): React.ReactNode {
-    return posts.map(p => (<Post key={p.message} image={p.image} message={p.message} />));
+    const { searchText } = this.state
+
+    return posts
+      .filter(p => searchText.length === 0 || p.message.includes(searchText))
+      .map(p => (<Post key={p.id} image={p.image} message={p.message} />));
+  }
+
+  private renderSearch() {
+    return (
+      <Input name="search" onChange={this.handleSearch} placeholder="O que você que ver?" />
+    )
   }
 }
