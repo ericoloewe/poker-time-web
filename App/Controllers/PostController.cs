@@ -10,21 +10,22 @@ using Microsoft.AspNetCore.Mvc;
 using App.Services;
 using Microsoft.Extensions.Options;
 using App.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Controllers
 {
     [Route("/api/[controller]")]
     public class PostController : Controller
     {
-        private PostService postService;
+        private IPostService postService;
 
-        public PostController(IOptions<AzureStorageConfig> config)
+        public PostController(IPostService postService)
         {
-            postService = new PostService(config.Value);
+            this.postService = postService;
         }
 
         [HttpGet]
-        public ObjectResult GetAll()
+        public ActionResult GetAll()
         {
             try
             {
@@ -38,8 +39,9 @@ namespace App.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ObjectResult> Like(string postId)
+        [Authorize]
+        [HttpPost("{postId}/like")]
+        public async Task<ActionResult> Like(string postId)
         {
             try
             {
@@ -53,8 +55,9 @@ namespace App.Controllers
             return Ok("OK");
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<ObjectResult> Save(NewPostData newPost)
+        public async Task<ActionResult> Save(NewPostData newPost)
         {
             try
             {
@@ -62,10 +65,10 @@ namespace App.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(Json(ex));
             }
 
-            return Ok("OK");
+            return Ok(Json("OK"));
         }
     }
 }

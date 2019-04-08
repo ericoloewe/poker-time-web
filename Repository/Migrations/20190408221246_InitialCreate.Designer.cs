@@ -9,7 +9,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(PokerTimeContext))]
-    [Migration("20190407010648_InitialCreate")]
+    [Migration("20190408221246_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,14 +111,14 @@ namespace Repository.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Domain.Post", "Post")
-                        .WithMany("Like")
+                        .WithMany("Likes")
                         .HasForeignKey("PostId");
                 });
 
             modelBuilder.Entity("Domain.Post", b =>
                 {
                     b.HasOne("Domain.User", "Author")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Domain.Image", "Image")

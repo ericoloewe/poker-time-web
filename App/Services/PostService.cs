@@ -6,20 +6,31 @@ using App.Datas;
 using App.Helpers;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Repository;
 
 namespace App.Services
 {
-    public class PostService
+
+    public interface IPostService
+    {
+        IEnumerable<PostData> GetAll();
+        Task Save(NewPostData newPost);
+        Task Like(string postId);
+    }
+
+    public class PostService : IPostService
     {
         private const string CONTAINER_NAME = "posts";
-        private IPostRepository postRepository = new PostRepository();
-        private CloudStorageService cloudStorageService;
-        private AzureStorageConfig azureStorageConfigs;
+        private IPostRepository postRepository;
+        private IUserService userService;
+        private ICloudStorageService cloudStorageService;
 
-        public PostService(AzureStorageConfig azureStorageConfigs)
+        public PostService(ICloudStorageService cloudStorageService, IPostRepository postRepository, IUserService userService)
         {
-            cloudStorageService = new CloudStorageService(azureStorageConfigs);
+            this.cloudStorageService = cloudStorageService;
+            this.postRepository = postRepository;
+            this.userService = userService;
         }
 
         public IEnumerable<PostData> GetAll()
@@ -40,10 +51,11 @@ namespace App.Services
             {
                 Image = new Image(url),
                 Message = newPost.Message,
+                Author = userService.GetLoggedUser()
             });
         }
 
-        internal Task Like(string postId)
+        public Task Like(string postId)
         {
             throw new NotImplementedException();
         }

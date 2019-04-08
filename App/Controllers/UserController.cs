@@ -17,11 +17,11 @@ namespace App.Controllers
     [Route("/api/[controller]")]
     public class UserController : Controller
     {
-        private UserService userService;
+        private IUserService userService;
 
-        public UserController(IOptions<AzureStorageConfig> config)
+        public UserController(IUserService userService)
         {
-            userService = new UserService(config.Value);
+            this.userService = userService;
         }
 
         [Authorize]
@@ -30,10 +30,7 @@ namespace App.Controllers
         {
             try
             {
-                var authToken = Request.Cookies[UserService.AUTH_COOKIE_NAME];
-                var user = userService.GetUserDataByAuthToken(authToken);
-
-                return Ok(user);
+                return Ok(userService.GetLoggedUserData());
             }
             catch (Exception ex)
             {
@@ -57,11 +54,11 @@ namespace App.Controllers
             }
             catch (ArgumentException ex)
             {
-                return Json(BadRequest(new { error = "true" }));
+                return BadRequest(Json(new { error = "true" }));
             }
             catch (Exception ex)
             {
-                return Json(BadRequest(ex));
+                return BadRequest(Json(ex));
             }
         }
 
@@ -78,7 +75,7 @@ namespace App.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(Json(ex));
             }
         }
     }

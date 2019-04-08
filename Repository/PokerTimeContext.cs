@@ -38,5 +38,15 @@ namespace Repository
 
             return base.SaveChanges();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Image>().ToTable("Images");
+            modelBuilder.Entity<Post>().ToTable("Posts");
+            modelBuilder.Entity<Like>().ToTable("Likes");
+            modelBuilder.Entity<User>().ToTable("Users");
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

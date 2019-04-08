@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using App.Datas;
 using App.Helpers;
 using Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 
@@ -15,6 +17,8 @@ namespace App.Services
         Task SaveAsync(NewUserData newUser);
         Task<string> LoginAsync(UserLoginData userLogin);
         Task<User> AuthenticateAsync(string email, string password);
+        User GetLoggedUser();
+        UserData GetLoggedUserData();
         User GetUserByAuthToken(string authToker);
     }
 
@@ -24,15 +28,15 @@ namespace App.Services
         public static IDictionary<string, User> AuthTokens { get; private set; } = new Dictionary<string, User>();
         public static string AUTH_COOKIE_NAME = "Authorization";
         private const string CONTAINER_NAME = "users";
-        private IUserRepository userRepository = new UserRepository();
-        private CloudStorageService cloudStorageService;
-        private AzureStorageConfig azureStorageConfigs;
+        private IUserRepository userRepository;
+        private ICloudStorageService cloudStorageService;
+        private IHttpContextAccessor httpContextAccessor;
 
-        public UserService() { }
-
-        public UserService(AzureStorageConfig azureStorageConfigs)
+        public UserService(IUserRepository userRepository, ICloudStorageService cloudStorageService, IHttpContextAccessor httpContextAccessor)
         {
-            cloudStorageService = new CloudStorageService(azureStorageConfigs);
+            this.userRepository = userRepository;
+            this.cloudStorageService = cloudStorageService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<User> AuthenticateAsync(string email, string password)
@@ -71,9 +75,16 @@ namespace App.Services
             return userAuthToken;
         }
 
-        public UserData GetUserDataByAuthToken(string authToken)
+        public User GetLoggedUser()
         {
-            var user = GetUserByAuthToken(authToken);
+            var cookie = this.httpContextAccessor.HttpContext.Request.Cookies[AUTH_COOKIE_NAME];
+
+            return GetUserByAuthToken(cookie);
+        }
+
+        public UserData GetLoggedUserData()
+        {
+            var user = GetLoggedUser();
 
             return new UserData
             {

@@ -5,7 +5,7 @@ namespace Domain
 {
     public class Post : AuditableEntity
     {
-        public IList<Like> Like { get; set; }
+        public IList<Like> Likes { get; set; }
         public Image Image { get; set; }
         public string Id { get; set; }
         public string Message { get; set; }

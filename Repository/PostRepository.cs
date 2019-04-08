@@ -25,6 +25,7 @@ namespace Repository
         {
             using (var db = new PokerTimeContext())
             {
+                db.Users.Attach(post.Author);
                 await db.Posts.AddAsync(post);
                 await db.SaveChangesAsync();
             }
