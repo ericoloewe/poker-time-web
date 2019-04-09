@@ -63,7 +63,7 @@ export default class Home extends React.Component {
 
   private renderSearch() {
     return (
-      <Input name="search" onChange={this.handleSearch} placeholder="O que você que ver?" />
+      <Input name="search" onChange={this.handleSearch} placeholder="O que você procura?" />
     )
   }
 }
