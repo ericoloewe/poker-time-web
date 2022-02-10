@@ -24,7 +24,7 @@
     "@types/node": "^11.13.0",
     "ajv": "^6.0.0",
     "cross-env": "^5.2.0",
-    "node-sass": "^4.11.0"
+    "node-sass": "^7.0.0"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
